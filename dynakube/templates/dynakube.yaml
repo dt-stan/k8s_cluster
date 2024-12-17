@@ -1,6 +1,6 @@
 # The template for this file is available on GitHub: https://github.com/Dynatrace/dynatrace-operator/blob/main/assets/samples/dynakube/cloudNativeFullStack.yaml
 apiVersion: v1
-data:
+stringData:
   # Required Token Scopes Documentation
   # https://docs.dynatrace.com/managed/ingest-from/setup-on-k8s/deployment/tokens-permissions#token-scopes
   # apiToken --> Dynatrace Operator Token
@@ -202,8 +202,8 @@ spec:
       {{- if .Values.containers }}
         {{- if .Values.containers.oneagent }}
       image: "{{ .Values.containers.oneagent.registry }}/{{ .Values.containers.oneagent.image_name}}:{{ .Values.containers.oneagent.image_tag}}"
-        {{- endif }}
-      {{- endif }}
+        {{- end }}
+      {{- end }}
 
       # Optional: If specified, indicates the OneAgent version to use
       # Defaults to the configured version on your Dynatrace environment
@@ -230,8 +230,8 @@ spec:
       {{- if .Values.containers }}
         {{- if .Values.containers.codemodules }}
       image: "{{ .Values.containers.codemodules.registry }}/{{ .Values.containers.codemodules.image_name}}:{{ .Values.containers.codemodules.image_tag}}"
-        {{- endif }}
-      {{- endif }}
+        {{- end }}
+      {{- end }}
 
       # Optional: The SecComp Profile that will be used by the OneAgent in
       # order to run in secure computing mode.
@@ -265,8 +265,8 @@ spec:
     {{- if .Values.containers }}
       {{- if .Values.containers.activegate }}
     image: "{{ .Values.containers.activegate.registry }}/{{ .Values.containers.activegate.image_name}}:{{ .Values.containers.activegate.image_tag}}"
-      {{- endif }}
-    {{- endif }}
+      {{- end }}
+    {{- end }}
 
     # Recommended: Sets the activation group for ActiveGate instances
     #

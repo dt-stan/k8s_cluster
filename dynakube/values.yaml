@@ -10,18 +10,17 @@ cluster_name: "github-workspaces"
 
 containers:
     oneagent:
-        registry: "https://docker.io"
+        registry: "docker.io"
         image_name: "dynatrace-oneagent"
-        image_tag: "latest"
+        image_tag: "1.303.70.20241211-194654"
     codemodules:
-        registry: "https://docker.io"
+        registry: "docker.io"
         image_name: "dynatrace-codemodules"
-        image_tag: "latest"
+        image_tag: "1.303.70.20241211-194654"
     activegate:
-        registry: "https://docker.io"
+        registry: "docker.io"
         image_name: "dynatrace-activegate"
-        image_tag: "latest"
-    
+        image_tag: "1.303.41.20241206-221951"
 
 namespace: "dynatrace"
 
