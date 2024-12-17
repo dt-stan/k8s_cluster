@@ -1,0 +1,30 @@
+api_tokens:
+    operator_token: "<FOOBAR>"
+    data_ingest_token: "<FOOBAR>"
+
+api_url: "https://vtq37192.live.dynatrace.com/api"
+
+cluster_group: "k8s-poc"
+
+cluster_name: "github-workspaces"
+
+containers:
+    oneagent:
+        registry: "https://docker.io"
+        image_name: "dynatrace-oneagent"
+        image_tag: "latest"
+    codemodules:
+        registry: "https://docker.io"
+        image_name: "dynatrace-codemodules"
+        image_tag: "latest"
+    activegate:
+        registry: "https://docker.io"
+        image_name: "dynatrace-activegate"
+        image_tag: "latest"
+    
+
+namespace: "dynatrace"
+
+namespace_selector_label: 'dynatrace.com/inject: "true"'
+
+skip_cert_check: false
