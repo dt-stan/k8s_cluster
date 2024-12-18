@@ -1,18 +1,19 @@
 apiVersion: kind.x-k8s.io/v1alpha4
 kind: Cluster
 name: kind
-nodes:
-- role: control-plane
-  kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "ingress-ready=true"
-- role: worker
-  kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "ingress-ready=true"
+# The following commands seem to have an issue for installing the operator.
+# nodes:
+# - role: control-plane
+#   kubeadmConfigPatches:
+#   - |
+#     kind: InitConfiguration
+#     nodeRegistration:
+#       kubeletExtraArgs:
+#         node-labels: "ingress-ready=true"
+# - role: worker
+#   kubeadmConfigPatches:
+#   - |
+#     kind: InitConfiguration
+#     nodeRegistration:
+#       kubeletExtraArgs:
+#         node-labels: "ingress-ready=true"
