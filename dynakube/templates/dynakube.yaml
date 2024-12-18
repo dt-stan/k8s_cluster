@@ -229,7 +229,7 @@ spec:
       #
       {{- if .Values.containers }}
         {{- if .Values.containers.codemodules }}
-      image: "{{ .Values.containers.codemodules.registry }}/{{ .Values.containers.codemodules.image_name}}:{{ .Values.containers.codemodules.image_tag}}"
+      codeModulesImage: "{{ .Values.containers.codemodules.registry }}/{{ .Values.containers.codemodules.image_name}}:{{ .Values.containers.codemodules.image_tag}}"
         {{- end }}
       {{- end }}
 
