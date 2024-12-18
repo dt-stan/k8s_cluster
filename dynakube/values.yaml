@@ -1,34 +1,42 @@
 api_tokens:
+    # Determines whether API Tokens are provided in a hashed format or a plain text format
     hashed: false
-    operator_token: "<FOOBAR>"
-    data_ingest_token: "<FOOBAR>"
+    # Required
+    operator_token: ""
+    # Required
+    data_ingest_token: ""
 
-api_url: "https://vtq37192.live.dynatrace.com/api"
+# Required
+# SaaS Format: 'https://<TenantUUID>.live.dynatrace.com/api'
+# Managed Format: 'https://<YourDynatraceServerURL>/e/<your-environment-id>/api'
+api_url: ""
 
 # Optional But Recommended
-cluster_group: "k8s-poc"
+cluster_group: ""
 
-cluster_name: "github-workspaces"
-
-# Optional
-containers:
-    oneagent:
-        registry: "docker.io/dynatrace"
-        image_name: "dynatrace-oneagent"
-        image_tag: "1.303.70.20241211-194654"
-    codemodules:
-        registry: "docker.io/dynatrace"
-        image_name: "dynatrace-codemodules"
-        image_tag: "1.303.70.20241211-194654"
-    activegate:
-        registry: "docker.io/dynatrace"
-        image_name: "dynatrace-activegate"
-        image_tag: "1.303.41.20241206-221951"
-
-namespace: "dynatrace"
+# Required
+cluster_name: ""
 
 # Optional
-namespace_selector_label: 'dynatrace.com/inject: "true"'
+# containers:
+#     oneagent:
+#         registry: "docker.io/dynatrace"
+#         image_name: "dynatrace-oneagent"
+#         image_tag: "1.303.70.20241211-194654"
+#     codemodules:
+#         registry: "docker.io/dynatrace"
+#         image_name: "dynatrace-codemodules"
+#         image_tag: "1.303.70.20241211-194654"
+#     activegate:
+#         registry: "docker.io/dynatrace"
+#         image_name: "dynatrace-activegate"
+#         image_tag: "1.303.41.20241206-221951"
+
+# Optional
+# namespace: "dynatrace"
+
+# Optional
+# namespace_selector_label: 'dynatrace.com/inject: "true"'
 
 # Optional (Default: false)
 # skip_cert_check: false
