@@ -1,13 +1,16 @@
 api_tokens:
+    hashed: false
     operator_token: "<FOOBAR>"
     data_ingest_token: "<FOOBAR>"
 
 api_url: "https://vtq37192.live.dynatrace.com/api"
 
+# Optional But Recommended
 cluster_group: "k8s-poc"
 
 cluster_name: "github-workspaces"
 
+# Optional
 containers:
     oneagent:
         registry: "docker.io/dynatrace"
@@ -24,6 +27,8 @@ containers:
 
 namespace: "dynatrace"
 
+# Optional
 namespace_selector_label: 'dynatrace.com/inject: "true"'
 
-skip_cert_check: false
+# Optional (Default: false)
+# skip_cert_check: false

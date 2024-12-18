@@ -1,6 +1,10 @@
 # The template for this file is available on GitHub: https://github.com/Dynatrace/dynatrace-operator/blob/main/assets/samples/dynakube/cloudNativeFullStack.yaml
 apiVersion: v1
+{{- if .Values.api_tokens.hashed }}
+data:
+{{- else }}
 stringData:
+{{- end }}
   # Required Token Scopes Documentation
   # https://docs.dynatrace.com/managed/ingest-from/setup-on-k8s/deployment/tokens-permissions#token-scopes
   # apiToken --> Dynatrace Operator Token
@@ -11,30 +15,30 @@ stringData:
   # - Installer Download
   # - Access problem and event feed, metrics and topolgy
   # - Create ActiveGate Tokens
-  apiToken: {{ .Values.api_tokens.operator_token }}
+  apiToken: {{ required "Dynatrace Operator Token is required" .Values.api_tokens.operator_token }}
   # Data Ingest Token
   # Requires
   # - Ingest Metrics
   # - Ingest Logs
   # - Ingest OpenTelemetry Traces
-  dataIngestToken: {{ .Values.api_tokens.data_ingest_token }}
+  dataIngestToken: {{ required "Data Ingest Token is required" .Values.api_tokens.data_ingest_token }}
 kind: Secret
 metadata:
-  name: {{ .Values.cluster_name }}
-  namespace: {{ .Values.namespace }}
+  name: {{ required "Dynatrace Cluster Name is required" .Values.cluster_name }}
+  namespace: {{ required "Dynatrace Namespace is required" .Values.namespace }}
 type: Opaque
 ---
 apiVersion: dynatrace.com/v1beta2
 kind: DynaKube
 metadata:
-  name: {{ .Values.cluster_name }}
-  namespace: {{ .Values.namespace }}
+  name: {{ required "Dynatrace Cluster Name is required" .Values.cluster_name }}
+  namespace: {{ required "Dynatrace Namespace is required" .Values.namespace }}
 spec:
   # Dynatrace apiUrl including the `/api` path at the end.
   # For SaaS, set `ENVIRONMENTID` to your environment ID.
   # For Managed, change the apiUrl address.
   # For instructions on how to determine the environment ID and how to configure the apiUrl address, see https://www.dynatrace.com/support/help/reference/dynatrace-concepts/environment-id/.
-  apiUrl: {{ .Values.api_url }}
+  apiUrl: {{ required "Dynatrace API URL is required" .Values.api_url }}
 
   # Optional: Name of the secret holding the credentials required to connect to the Dynatrace tenant
   # If unset, the name of this custom resource is used
@@ -48,7 +52,7 @@ spec:
 
   # Optional: Disable certificate validation checks for installer download and API communication
   #
-  skipCertCheck: {{ .Values.skip_cert_check }}
+  skipCertCheck: {{ .Values.skip_cert_check | default false }}
 
   # Optional: Set custom proxy settings either directly or from a secret with the field 'proxy'
   #
@@ -65,7 +69,11 @@ spec:
   # Optional: Sets Network Zone for OneAgent and ActiveGate pods
   # Make sure networkZones are enabled on your cluster before (see https://www.dynatrace.com/support/help/setup-and-configuration/network-zones/network-zones-basic-info/)
   #
+  {{- if .Values.cluster_group }}
   networkZone: {{ .Values.cluster_group }}
+  {{- else }}
+  # networkZone:
+  {{- end }}
 
   # Optional: If enabled, and if Istio is installed on the Kubernetes environment, the
   # Operator will create the corresponding VirtualService and ServiceEntry objects to allow access
@@ -97,6 +105,10 @@ spec:
     namespaceSelector:
       matchLabels:
         {{ .Values.namespace_selector_label }}
+    {{- else }}
+    # namespaceSelector:
+    #   matchLabels:
+    #     app: my-app
     {{- end }}
     #   matchExpressions:
     #    - key: app 
@@ -108,7 +120,11 @@ spec:
   oneAgent:
     # Optional: Sets a host group for OneAgent.
     #
+    {{- if .Values.cluster_group }}
     hostGroup: {{ .Values.cluster_group }}
+    {{- else }}
+    # hostGroup:
+    {{- end }}
 
     # Enables cloud-native fullstack monitoring and changes its settings
     # Cannot be used in conjunction with classic fullstack monitoring, application-only monitoring or host monitoring
@@ -123,6 +139,10 @@ spec:
       namespaceSelector:
         matchLabels:
           {{ .Values.namespace_selector_label }}
+    {{- else }}
+      # namespaceSelector:
+      #   matchLabels:
+      #     app: my-app
     {{- end }}
       #   matchExpressions:
       #    - key: app
@@ -202,7 +222,11 @@ spec:
       {{- if .Values.containers }}
         {{- if .Values.containers.oneagent }}
       image: "{{ .Values.containers.oneagent.registry }}/{{ .Values.containers.oneagent.image_name}}:{{ .Values.containers.oneagent.image_tag}}"
+        {{- else }}
+      # image: ""
         {{- end }}
+      {{- else }}
+      # image: ""
       {{- end }}
 
       # Optional: If specified, indicates the OneAgent version to use
@@ -230,7 +254,11 @@ spec:
       {{- if .Values.containers }}
         {{- if .Values.containers.codemodules }}
       codeModulesImage: "{{ .Values.containers.codemodules.registry }}/{{ .Values.containers.codemodules.image_name}}:{{ .Values.containers.codemodules.image_tag}}"
+        {{- else }}
+      # codeModulesImage: ""
         {{- end }}
+      {{- else }}
+      # codeModulesImage: ""
       {{- end }}
 
       # Optional: The SecComp Profile that will be used by the OneAgent in
@@ -265,12 +293,20 @@ spec:
     {{- if .Values.containers }}
       {{- if .Values.containers.activegate }}
     image: "{{ .Values.containers.activegate.registry }}/{{ .Values.containers.activegate.image_name}}:{{ .Values.containers.activegate.image_tag}}"
+      {{- else }}
+    # image: ""
       {{- end }}
+    {{- else }}
+    # image: ""
     {{- end }}
 
     # Recommended: Sets the activation group for ActiveGate instances
     #
+    {{- if .Values.cluster_group }}
     group: {{ .Values.cluster_group }}
+    {{- else }}
+    # group:
+    {{- end }}
 
     # Optional: Defines a custom properties file, the file contents can be provided either as a value in this yaml or as a reference to a secret.
     # If a reference to a secret is used, then the file contents must be stored under the 'customProperties' key within the secret.
