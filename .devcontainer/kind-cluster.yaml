@@ -2,8 +2,11 @@ apiVersion: kind.x-k8s.io/v1alpha4
 kind: Cluster
 name: kind
 # The following commands seem to have an issue for installing the operator.
-# nodes:
-# - role: control-plane
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: /
+    containerPath: /mnt/root
 #   kubeadmConfigPatches:
 #   - |
 #     kind: InitConfiguration
