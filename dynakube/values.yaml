@@ -40,3 +40,33 @@ cluster_name: ""
 
 # Optional (Default: false)
 # skip_cert_check: false
+
+# Optional
+# --> Define OneAgent Resource Constraints
+# one_agent:
+#   resources:
+#     requests:
+#       cpu: "100m"
+#       memory: "512Mi"
+#     limits:
+#       cpu: "300m"
+#       memory: "1.5Gi"
+#   init_resources:
+#     requests:
+#       cpu: "30m"
+#       memory: "30Mi"
+#     limits:
+#       cpu: "100m"
+#       memory: "60Mi"
+
+# Optional
+# --> Define ActiveGate Resource Constraints
+# activegate:
+#   resources:
+#     replicas: 1
+#     requests:
+#       cpu: "500m"
+#       memory: "512Mi"
+#     limits:
+#       cpu: "1000m"
+#       memory: "1.5Gi"
