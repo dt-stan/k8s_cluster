@@ -68,3 +68,7 @@ helm install --set api_tokens.operator_token=$DT_API_TOKEN --set api_tokens.data
 - `namespace_selector_label`: [*Optional*] Defines a Kubernetes label which [the Operator will respect as the only namespaces to instrument](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/guides/operation/annotate#monitor-specific-namespaces).  Prevents the OneAgent from instrumenting all Pods in your cluster.
 
 - `skip_cert_check`: [Default: `false`] A flag which will disable the certificate inspection for installer download and API communication.
+- `oneagent.resources`: [*Optional*] Defines the requests and limits for Kubernetes resources for the OneAgent pods
+- `oneagent.init_resources`: [*Optional*] Defines the requests and limits for Kubernetes resources for the init containers that bootstrap the OneAgent pods
+- `activegate.resources`: [*Optional*] Defines the requests and limits for Kubernetes resources for the ActiveGate Pods
+- `activegate.resources.replicas`: [*Optional*] Defines the number of ActiveGate Pods which will be spun up.  Defaults to a single pod but can be increased to help with cluster load.
