@@ -152,7 +152,14 @@ spec:
       # Optional: Sets a node selector to control on which nodes the OneAgent will be deployed.
       # For more information on node selectors, see https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/
       #
+      {{- if and .Values.one_agent .Values.one_agent.node_selector }}
+      nodeSelector:
+        {{- range $key, $val := .Values.one_agent.node_selector }}
+        {{ $key }}: {{ $val | quote }}
+        {{- end }}
+      {{- else }}
       # nodeSelector: {}
+      {{- end }}
 
       # Optional: Sets the priority class assigned to the OneAgent Pods. No class is set by default.
       # For more information on priority classes, see https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
@@ -402,7 +409,14 @@ spec:
     # Optional: Sets a node selector to control on which nodes the ActiveGate will be deployed.
     # For more information on node selectors, see https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/
     #
+    {{- if and .Values.activegate .Values.activegate.node_selector }}
+    nodeSelector:
+      {{- range $key, $val := .Values.activegate.node_selector }}
+      {{ $key }}: {{ $val | quote }}
+      {{- end }}
+    {{- else }}
     # nodeSelector: {}
+    {{- end }}
 
     # Optional: Specifies tolerations to include with the ActiveGate StatefulSet.
     # For more information on tolerations, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/

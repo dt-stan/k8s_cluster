@@ -44,6 +44,8 @@ cluster_name: ""
 # Optional
 # --> Define OneAgent Resource Constraints
 # one_agent:
+#   node_selector:
+#     key: "value"
 #   resources:
 #     requests:
 #       cpu: "100m"
@@ -62,6 +64,8 @@ cluster_name: ""
 # Optional
 # --> Define ActiveGate Resource Constraints
 # activegate:
+#   node_selector:
+#     key: "value"
 #   resources:
 #     replicas: 1
 #     requests:
