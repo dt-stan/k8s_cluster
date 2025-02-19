@@ -169,6 +169,14 @@ spec:
       # Optional: Specifies tolerations to include with the OneAgent DaemonSet.
       # For more information on tolerations, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
       #
+      {{- if and .Values.one_agent .Values.one_agent.tolerations }}
+      tolerations:
+        {{- range .Values.one_agent.tolerations }}
+        - {{ range $key, $val := . -}}
+          {{ $key }}: {{ $val | replace "\"" "" | replace "'" "" }}
+          {{ end }}
+        {{- end }}
+      {{- else }}
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master
@@ -176,6 +184,7 @@ spec:
         - effect: NoSchedule
           key: node-role.kubernetes.io/control-plane
           operator: Exists
+      {{- end }}
 
       # Optional: Adds resource settings for OneAgent container
       # Consumption of the OneAgent heavily depends on the workload to monitor
@@ -421,10 +430,19 @@ spec:
     # Optional: Specifies tolerations to include with the ActiveGate StatefulSet.
     # For more information on tolerations, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
     #
+    {{- if and .Values.activegate .Values.activegate.tolerations }}
+    tolerations:
+      {{- range .Values.activegate.tolerations }}
+      - {{ range $key, $val := . -}}
+        {{ $key }}: {{ $val | replace "\"" "" | replace "'" "" }}
+        {{ end }}
+      {{- end }}
+    {{- else }}
     # tolerations:
     # - effect: NoSchedule
     #   key: node-role.kubernetes.io/master
     #   operator: Exists
+    {{- end }}
 
     # Optional: Adds custom labels to ActiveGate pods
     # Can be used to structure workloads
