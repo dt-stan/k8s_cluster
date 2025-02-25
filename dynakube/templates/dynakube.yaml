@@ -173,7 +173,7 @@ spec:
       tolerations:
         {{- range .Values.one_agent.tolerations }}
         - {{ range $key, $val := . -}}
-          {{ $key }}: {{ $val | replace "\"" "" | replace "'" "" }}
+          {{ $key }}: {{ $val }}
           {{ end }}
         {{- end }}
       {{- else }}
@@ -434,7 +434,7 @@ spec:
     tolerations:
       {{- range .Values.activegate.tolerations }}
       - {{ range $key, $val := . -}}
-        {{ $key }}: {{ $val | replace "\"" "" | replace "'" "" }}
+        {{ $key }}: {{ $val }}
         {{ end }}
       {{- end }}
     {{- else }}
