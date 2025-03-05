@@ -73,7 +73,9 @@ helm install --set api_tokens.operator_token=$DT_API_TOKEN --set api_tokens.data
 - `oneagent.resources`: [*Optional*] Defines the requests and limits for Kubernetes resources for the OneAgent pods
 - `oneagent.init_resources`: [*Optional*] Defines the requests and limits for Kubernetes resources for the init containers that bootstrap the OneAgent pods
 - `oneagent.tolerations`: [*Optional*] Overrides the default taints and tolerations for OneAgent resources.
+- `oneagent.annotations`: [*Optional*] Adds annotations to the OneAgent pod.  This is most commonly used [to set Dynakube feature flags](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/reference/dynakube-feature-flags).
 - `activegate.node_selector`: [*Optional*] Defines a [NodeSelector label](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) to control on which nodes the ActiveGate will be deployed
 - `activegate.resources`: [*Optional*] Defines the requests and limits for Kubernetes resources for the ActiveGate Pods
 - `activegate.resources.replicas`: [*Optional*] Defines the number of ActiveGate Pods which will be spun up.  Defaults to a single pod but can be increased to help with cluster load.
 - `activegate.tolerations`: [*Optional*] Sets the taints and tolerations for ActiveGate resources.
+- `activegate.annotations`: [*Optional*] Adds annotations to the ActiveGate pod.  This is most commonly used [to set Dynakube feature flags](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/reference/dynakube-feature-flags).

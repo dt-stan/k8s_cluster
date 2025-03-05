@@ -70,6 +70,11 @@ cluster_name: ""
 #     - effect: NoSchedule
 #       key: node-role.kubernetes.io/control-plane
 #       operator: Exists
+#   annotations:
+#     - name: "feature.dynatrace.com/label-version-detection"
+#       value: '"false"'
+#     - name: "feature.dynatrace.com/automatic-injection"
+#       value: '"true"'
 
 # Optional
 # --> Define ActiveGate Resource Constraints
@@ -86,3 +91,6 @@ cluster_name: ""
 #       memory: "1.5Gi"
 #   tolerations:
 #     - key: value
+#   annotations:
+#     - name: "feature.dynatrace.com/EXAMPLE-FLAG"
+#       value: '"false"'

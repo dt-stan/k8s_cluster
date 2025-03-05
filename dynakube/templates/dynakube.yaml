@@ -249,8 +249,15 @@ spec:
 
       # Optional: Adds custom annotations to OneAgent pods
       #
+      {{- if and .Values.one_agent .Values.one_agent.annotations }}
+      annotations:
+      {{- range $v := .Values.one_agent.annotations }}
+        {{ $v.name }}: {{ $v.value }}
+      {{- end }}
+      {{- else }}
       # annotations:
       #   custom: annotation
+      {{- end }}
 
       # Optional: Adds custom labels to OneAgent pods
       # Can be used to structure workloads
@@ -480,8 +487,15 @@ spec:
 
     # Optional: Adds custom annotations to ActiveGate pods
     #
+    {{- if and .Values.activegate .Values.activegate.annotations }}
+    annotations:
+    {{- range $v := .Values.activegate.annotations }}
+      {{ $v.name }}: {{ $v.value }}
+    {{- end }}
+    {{- else }}
     # annotations:
     #   custom: annotation
+    {{- end }}
 
     # Optional: Adds TopologySpreadConstraints to the ActiveGate pods
     # For more information on TopologySpreadConstraints, see https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
