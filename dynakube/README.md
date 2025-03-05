@@ -45,6 +45,7 @@ helm install --set api_tokens.operator_token=$DT_API_TOKEN --set api_tokens.data
     - Secret name
     - DynaKube custom resource
     - ActiveGate and OneAgent pods
+- `trustedCAConfigMap`: [*Optional*] Used to reference a ConfigMap which defines a Root CA that the ActiveGate, OneAgent & Operator should trust.  This ConfigMap should already exist. [See Details Here](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/guides/networking-security-compliance/network-restricted-environments#add-trusted-ca-certificates).
 - `containers.oneagent.registry`: [*Optional*] This can be used to specify which OneAgent Container Image to deploy, specifically which registry to pull the image from.
     - Example: `docker.io/dynatrace`
 - `containers.oneagent.image_name`: [*Optional*] This can be used to specify which OneAgent Container Image to deploy, specifically the container image name

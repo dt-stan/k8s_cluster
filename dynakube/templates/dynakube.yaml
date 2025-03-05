@@ -64,7 +64,11 @@ spec:
   # Put the certificate under "certs" key within your configmap.
   #	Applies to Dynatrace Operator, OneAgent and ActiveGate.
   #
+  {{- if .Values.trustedCAConfigMap }}
+  trustedCAs: {{ .Values.trustedCAConfigMap }}
+  {{- else }}
   # trustedCAs: name-of-my-ca-configmap
+  {{- end }}
 
   # Optional: Sets Network Zone for OneAgent and ActiveGate pods
   # Make sure networkZones are enabled on your cluster before (see https://www.dynatrace.com/support/help/setup-and-configuration/network-zones/network-zones-basic-info/)

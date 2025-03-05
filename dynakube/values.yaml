@@ -18,6 +18,9 @@ cluster_group: ""
 cluster_name: ""
 
 # Optional
+# trustedCAConfigMap: "name-of-my-ca-configmap"
+
+# Optional
 # containers:
 #     oneagent:
 #         registry: "docker.io/dynatrace"
