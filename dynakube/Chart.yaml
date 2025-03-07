@@ -1,5 +1,5 @@
 apiVersion: v2
-name: dynakube-Manifest
+name: dynakube-manifest
 description: A Helm chart for the application of Dynakube
 
 # A chart can be either an 'application' or a 'library' chart.
