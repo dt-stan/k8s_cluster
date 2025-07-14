@@ -11,7 +11,8 @@
           "upgradePackages": "true",
           "packages": "ca-certificates,gnupg,jq,vim"
       },
-      "ghcr.io/mpriscella/features/kind:1": {}
+      "ghcr.io/mpriscella/features/kind:1": {},
+      "ghcr.io/dhoeric/features/k9s:1": {}
   },
 
   // do not change these if you want Docker in Docker support
