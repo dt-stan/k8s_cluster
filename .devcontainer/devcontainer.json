@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/kubernetes-helm
 {
-  "name": "IBM-MQ-Playground-Application",
+  "name": "PythonDevelopment",
   "dockerFile": "Dockerfile",
   // If no dockerfile is specified, you can change the below to specify a Docker image to use instead
   //"image": "mcr.microsoft.com/devcontainers/base:bullseye",
@@ -12,7 +12,11 @@
           "packages": "ca-certificates,gnupg,jq,vim"
       },
       "ghcr.io/mpriscella/features/kind:1": {},
-      "ghcr.io/dhoeric/features/k9s:1": {}
+      "ghcr.io/dhoeric/features/k9s:1": {},
+      "ghcr.io/devcontainers/features/python:1": {
+        "version": "3.12",
+        "toolsToInstall": "black,mypy,pipenv,isort,poetry"
+      }
   },
 
   // do not change these if you want Docker in Docker support
@@ -30,15 +34,21 @@
     "vscode": {
       // Set container specific settings
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh"
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "remote.extensionKind": {
+          "vscodevim.vim": [
+            "ui"
+          ]
+        }
       },
       "extensions": [
         "ms-azuretools.vscode-docker",
         "ms-kubernetes-tools.vscode-kubernetes-tools",
         "davidanson.vscode-markdownlint",
-        //"vscodevim.vim",
+        "vscodevim.vim",
         // "gruntfuggly.todo-tree",
         "mutantdino.resourcemonitor",
+        "ms-python.python"
         // "humao.rest-client",
         // "ms-vscode.makefile-tools"
       ]
