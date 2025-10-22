@@ -10,7 +10,6 @@ class Config(BaseSettings):
     otlp_token: SecretStr = Field(env="DT_API_TOKEN")
     otlp_meter_provider_name: str = Field("my-meter", env="OTLP_METER_PROVIDER_NAME")
     otlp_meter_provider_version: str = Field("0.1.0", env="OTLP_METER_PROVIDER_VERSION")
-    otlp_logger_provider_name: str = Field("my-logger", env="OTLP_LOGGER_PROVIDER_NAME")
     team_name: str = Field(env="DT_COSTCENTER")
     metric_prefix: str = Field("poc", env="DT_METRIC_PREFIX")
     product: str = Field(env="DT_PRODUCT")
