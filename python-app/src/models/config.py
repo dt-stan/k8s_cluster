@@ -13,6 +13,7 @@ class Config(BaseSettings):
     team_name: str = Field(env="DT_COSTCENTER")
     metric_prefix: str = Field("poc", env="DT_METRIC_PREFIX")
     product: str = Field(env="DT_PRODUCT")
+    sleep_timer: int = Field(60, env="SLEEP_TIMER")
 
     def as_serialized_dict(self) -> Dict[str, str]:
         return json.loads(self.json())
