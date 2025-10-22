@@ -1,6 +1,7 @@
-from helpers import logger
-from time import sleep
 from datetime import datetime
+from time import sleep
+
+from helpers import logger
 from models.config import config
 from otel import setupOTelObjects
 
@@ -13,7 +14,9 @@ def main():
     )
     while True:
         counter.add(1, {"team": config.team_name, "product": config.product})
-        logger.info(f"Successfully emitted metric for Team: '{config.team_name}', Product: '{config.product}' at Time: '{datetime.now().strftime("%Y-%m-%dT%H:%M:%S")}'")
+        logger.info(
+            f"Successfully emitted metric for Team: '{config.team_name}', Product: '{config.product}' at Time: '{datetime.now().strftime("%Y-%m-%dT%H:%M:%S")}'"
+        )
         sleep(config.sleep_timer)
 
 

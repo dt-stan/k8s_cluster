@@ -28,17 +28,20 @@ from models.config import config
 
 
 def setupMetricResources(resource: Resource) -> MeterProvider:
-    exporter = OTLPMetricExporter(
-        endpoint=f"{config.otlp_metrics_api}",
-        headers={"Authorization": f"Api-Token {config.otlp_token.get_secret_value()}"},
-        preferred_temporality={
+    otlp_metric_exporter_config = {
+        "endpoint": f"{config.otlp_metrics_api}",
+        "preferred_temporality": {
             Counter: AggregationTemporality.DELTA,
             UpDownCounter: AggregationTemporality.CUMULATIVE,
             Histogram: AggregationTemporality.DELTA,
             ObservableCounter: AggregationTemporality.DELTA,
             ObservableUpDownCounter: AggregationTemporality.CUMULATIVE,
         },
-    )
+    }
+    if config.otlp_token:
+        otlp_metric_exporter_config["headers"] = {"Authorization": f"Api-Token {config.otlp_token.get_secret_value()}"}
+
+    exporter = OTLPMetricExporter(**otlp_metric_exporter_config)
 
     reader = PeriodicExportingMetricReader(exporter)
     provider = MeterProvider(metric_readers=[reader], resource=resource)
@@ -50,14 +53,12 @@ def setupLoggingResources(resource: Resource) -> Logger:
     logger_provider = LoggerProvider(resource=resource)
     set_logger_provider(logger_provider)
 
-    logger_provider.add_log_record_processor(
-        BatchLogRecordProcessor(
-            OTLPLogExporter(
-                endpoint=config.otlp_logs_api,
-                headers={"Authorization": f"Api-Token {config.otlp_token.get_secret_value()}"},
-            )
-        )
-    )
+    otlp_log_exporter_config = {"endpoint": config.otlp_logs_api}
+
+    if config.otlp_token:
+        otlp_log_exporter_config["headers"] = {"Authorization": f"Api-Token {config.otlp_token.get_secret_value()}"}
+
+    logger_provider.add_log_record_processor(BatchLogRecordProcessor(OTLPLogExporter(**otlp_log_exporter_config)))
     handler = LoggingHandler(level=logging.NOTSET, logger_provider=logger_provider)
 
     # Attach OTLP handler to root logger
