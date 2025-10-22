@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-collector-config
+  namespace: observability
+data:
+  otel-collector-config.yaml: |
+    receivers:
+      otlp:
+        protocols:
+          # grpc:
+          http:
+    
+    processors:
+      attributes:
+        actions:
+          - key: dt.cost.costcenter
+            value: "${env:DT_COSTCENTER}"
+            action: insert
+          - key: dt.cost.product
+            value: "${env:DT_PRODUCT}"
+            action: insert
+
+    exporters:
+      otlphttp:
+        endpoint: "${env:DT_ENDPOINT}"
+        headers:
+          Authorization: "Api-Token ${env:DT_API_TOKEN}"
+
+    service:
+      pipelines:
+        metrics:
+          receivers: [otlp]
+          processors: [attributes]
+          exporters: [otlphttp]
+        logs:
+          receivers: [otlp]
+          processors: [attributes]
+          exporters: [otlphttp]

@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-app
+  namespace: observability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-app
+  template:
+    metadata:
+      labels:
+        app: test-app
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kind-worker
+      volumes:
+        - name: otel-config
+          configMap:
+            name: otel-collector-config
+      initContainers:
+        - name: otel-collector
+          image: ghcr.io/dynatrace/dynatrace-otel-collector/dynatrace-otel-collector:0.38.0
+          restartPolicy: Always
+          args: ["--config", "/conf/otel-collector-config.yaml"]
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          volumeMounts:
+            - name: otel-config
+              mountPath: /conf
+          env:
+            - name: DT_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: otel-auth-secret
+                  key: DT_API_TOKEN
+            - name: DT_ENDPOINT
+              value: "https://vtq37192.live.dynatrace.com/api/v2/otlp"
+            - name: DT_COSTCENTER
+              value: "teamA"
+            - name: DT_PRODUCT
+              value: "foo"
+      containers:
+        - name: app-container
+          image: test-image:0.1
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          env:
+            - name: OTLP_METRICS_URL
+              value: "http://localhost:4318/v1/metrics"
+            - name: OTLP_LOGS_URL
+              value: "http://localhost:4318/v1/logs"
+            - name: DT_COSTCENTER
+              value: "teamA"
+            - name: DT_PRODUCT
+              value: "foo"
+            # - name: DT_API_TOKEN
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: otel-auth-secret
+            #       key: DT_API_TOKEN
+          # ports:
+          #   - containerPort: 8080
