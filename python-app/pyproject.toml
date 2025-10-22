@@ -1,0 +1,23 @@
+[project]
+name = "python-app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "dt-stan",email = "stanley.switalski@dynatrace.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "opentelemetry-api (>=1.38.0,<2.0.0)",
+    "opentelemetry-sdk (>=1.38.0,<2.0.0)",
+    "opentelemetry-exporter-otlp-proto-http (>=1.38.0,<2.0.0)",
+    "pydantic (==1.10)"
+]
+
+[tool.poetry]
+packages = [{include = "python_app", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
