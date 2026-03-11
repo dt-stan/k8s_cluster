@@ -18,6 +18,9 @@
         "toolsToInstall": "black,mypy,pipenv,isort,poetry"
       }
   },
+  "containerEnv": {
+    "DOCKER_API_VERSION": "1.43"
+  },
 
   // do not change these if you want Docker in Docker support
   // "runArgs": ["--init", "--privileged", "--network=host"],
