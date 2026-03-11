@@ -46,6 +46,8 @@ spec:
               value: "teamA"
             - name: DT_PRODUCT
               value: "foo"
+            - name: DT_SECURITY_CONTEXT
+              value: "teamA"
       containers:
         - name: app-container
           image: test-image:0.1

@@ -20,6 +20,9 @@ data:
           - key: dt.cost.product
             value: "${env:DT_PRODUCT}"
             action: insert
+          - key: dt.security_context
+            value: "${env:DT_SECURITY_CONTEXT}"
+            action: insert
 
     exporters:
       otlphttp:
