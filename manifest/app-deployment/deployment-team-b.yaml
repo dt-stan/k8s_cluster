@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app
+  name: test-app-team-b
   namespace: observability
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: test-app
+      app: test-app-team-b
   template:
     metadata:
       labels:
-        app: test-app
+        app: test-app-team-b
     spec:
       nodeSelector:
         kubernetes.io/hostname: kind-worker
@@ -19,11 +19,12 @@ spec:
         - name: otel-config
           configMap:
             name: otel-collector-config
-      initContainers:
+      containers:
         - name: otel-collector
-          image: ghcr.io/dynatrace/dynatrace-otel-collector/dynatrace-otel-collector:0.38.0
-          restartPolicy: Always
+          image: ghcr.io/dynatrace/dynatrace-otel-collector/dynatrace-otel-collector:0.44.0
           args: ["--config", "/conf/otel-collector-config.yaml"]
+          ports:
+            - containerPort: 4319
           resources:
             requests:
               cpu: "100m"
@@ -38,17 +39,16 @@ spec:
             - name: DT_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: otel-auth-secret
+                  name: otel-auth-secret-team-b
                   key: DT_API_TOKEN
             - name: DT_ENDPOINT
-              value: "https://vtq37192.live.dynatrace.com/api/v2/otlp"
+              value: "https://tvw24978.live.dynatrace.com/api/v2/otlp"
             - name: DT_COSTCENTER
-              value: "teamA"
+              value: "teamB"
             - name: DT_PRODUCT
-              value: "foo"
+              value: "bar"
             - name: DT_SECURITY_CONTEXT
-              value: "teamA"
-      containers:
+              value: "teamB"
         - name: app-container
           image: test-image:0.1
           resources:
@@ -60,17 +60,10 @@ spec:
               memory: "512Mi"
           env:
             - name: OTLP_METRICS_URL
-              value: "http://localhost:4318/v1/metrics"
+              value: "http://localhost:4319/v1/metrics"
             - name: OTLP_LOGS_URL
-              value: "http://localhost:4318/v1/logs"
+              value: "http://localhost:4319/v1/logs"
             - name: DT_COSTCENTER
-              value: "teamA"
+              value: "teamB"
             - name: DT_PRODUCT
-              value: "foo"
-            # - name: DT_API_TOKEN
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: otel-auth-secret
-            #       key: DT_API_TOKEN
-          # ports:
-          #   - containerPort: 8080
+              value: "bar"
