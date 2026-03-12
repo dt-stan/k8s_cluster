@@ -1,6 +1,8 @@
 import logging
 from logging import Logger
 
+from models.config import config
+
 # Metric imports
 from opentelemetry import metrics as metrics
 from opentelemetry._logs import set_logger_provider
@@ -23,8 +25,6 @@ from opentelemetry.sdk.metrics.export import AggregationTemporality, PeriodicExp
 
 # OpenTelemetry Imports
 from opentelemetry.sdk.resources import Resource
-
-from models.config import config
 
 
 def setupMetricResources(resource: Resource) -> MeterProvider:

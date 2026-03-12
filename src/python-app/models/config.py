@@ -13,6 +13,7 @@ class Config(BaseSettings):
     team_name: str = Field(env="DT_COSTCENTER")
     metric_prefix: str = Field("poc", env="DT_METRIC_PREFIX")
     product: str = Field(env="DT_PRODUCT")
+    shared_metric_name: str = Field("common", env="DT_SHARED_METRIC_NAME")
     sleep_timer: int = Field(60, env="SLEEP_TIMER")
 
     def as_serialized_dict(self) -> Dict[str, str]:
