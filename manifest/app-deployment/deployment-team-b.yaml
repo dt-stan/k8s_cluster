@@ -23,8 +23,6 @@ spec:
         - name: otel-collector
           image: ghcr.io/dynatrace/dynatrace-otel-collector/dynatrace-otel-collector:0.44.0
           args: ["--config", "/conf/otel-collector-config.yaml"]
-          ports:
-            - containerPort: 4319
           resources:
             requests:
               cpu: "100m"
@@ -60,9 +58,9 @@ spec:
               memory: "512Mi"
           env:
             - name: OTLP_METRICS_URL
-              value: "http://localhost:4319/v1/metrics"
+              value: "http://localhost:4318/v1/metrics"
             - name: OTLP_LOGS_URL
-              value: "http://localhost:4319/v1/logs"
+              value: "http://localhost:4318/v1/logs"
             - name: DT_COSTCENTER
               value: "teamB"
             - name: DT_PRODUCT
